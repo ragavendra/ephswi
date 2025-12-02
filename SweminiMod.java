@@ -108,9 +108,10 @@ snam=null; // Realistisch?
     long iflag, iflgret;
     int p;
     iflag = SweConst.SEFLG_SPEED;
-    while (true) {
+    // while (true) {
       System.out.print("\nDate (d.m.y) ?");
       /*gets(sdate);*/
+	  /* 
       try {
         InputStreamReader in=new InputStreamReader(System.in);
         BufferedReader bin=new BufferedReader(in);
@@ -119,6 +120,9 @@ snam=null; // Realistisch?
         System.out.println(ie.getMessage());
         System.exit(SweConst.OK);
       }
+	  */
+
+	  sdate="26.11.2025";
       if( "".equals(sdate) ) System.exit(SweConst.OK);
       /*
        * stop if a period . is entered
@@ -158,12 +162,18 @@ snam=null; // Realistisch?
       System.out.print("planet     \tlongitude\tlatitude\tdistance\t"+
                        "speed long.\n");
 
+	  /* 
 	  sw.swe_set_sid_mode(SweConst.SE_SIDM_LAHIRI);
 	  var aya = sw.swe_get_ayanamsa(te);
 	  System.out.printf("Ayanamsha is %8.4f\n", aya);
+	  */
 
-	  // iflag = SweConst.SEFLG_SIDEREAL;
-	  iflag |= SweConst.SE_SIDM_LAHIRI;
+	  // iflag |= SweConst.SEFLG_SIDEREAL;
+	  iflgret = iflag = SweConst.SEFLG_SIDEREAL;
+	  // iflag |= SweConst.SE_SIDM_LAHIRI;
+	  var swe = new Swetest();
+	  if(iflgret != iflag)
+		  System.out.printf("Flags are not the same %s. and %s\n", iflgret, iflag);
 
       /*
        * a loop over all planets
@@ -183,6 +193,8 @@ snam=null; // Realistisch?
 			  System.out.print("error: "+serr.toString()+"\n");
 		  else if (iflgret != iflag)
 			  System.out.print("warning: iflgret != iflag. "+serr.toString()+"\n");
+
+		  SweDate swDt = new SweDate();
 		  /*
 		   * get the name of the planet p
 		   */
@@ -190,10 +202,17 @@ snam=null; // Realistisch?
 		  /*
 		   * print the coordinates
 		   */
-		  System.out.print(f.fmt("%10s",snam)+"\t"+f.fmt("%11.7f",x2[0])+"\t"+
-				  f.fmt("%10.7f",x2[1])+"\t"+f.fmt("%10.7f",x2[2])+"\t"+
-				  f.fmt("%10.7f",x2[3])+"\n");
+		  // System.out.print(swe.dms(x2[2], 1));
+		  // System.out.print(f.fmt("%10s",snam)+"\t"+f.fmt("%11.7f",x2[0])+"\t"+
+		  System.out.print(f.fmt("%10s",snam));
+		  System.out.print(swe.dms(x2[0], 1));
+		  System.out.print(swe.dms(x2[1], 1));
+		  System.out.print(swe.dms(x2[2], 1));
+		  System.out.print(swe.dms(x2[3], 1));
+				  // f.fmt("%10.7f",x2[1])+"\t"+f.fmt("%10.7f",x2[2])+"\t"+
+				  // f.fmt("%10.7f",x2[3])+"\n");
+// dms(xobl[0],round_flag)
 	  }
-	  }
+	  // }
 	}
   }
