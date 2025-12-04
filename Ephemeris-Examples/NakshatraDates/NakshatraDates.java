@@ -11,8 +11,6 @@ public class NakshatraDates {
 
 	// final static double TZ_OFFSET_HOURS = 5.5;	// IST
 	final static double TZ_OFFSET_HOURS = -8;	// IST
-
-/*
 	final static String[] nakshatraNames = new String[] {
 		"Ashvini",
 		"Bharani",
@@ -24,8 +22,8 @@ public class NakshatraDates {
 		"Pushya",
 		"Ashlesha",
 		"Magha",
-		"Purva Phalguni",
-		"Uttar Phalguni",
+		"P Phalguni",
+		"U Phalguni",
 		"Hasta",
 		"Chitra",
 		"Svati",
@@ -38,41 +36,52 @@ public class NakshatraDates {
 		"Shravan",
 		"Shravishtha",
 		"Shatabhisha",
-		"Purva Bhadrapada",
-		"Uttara Bhadrapada",
+		"P Bhadrapada",
+		"U Bhadrapada",
 		"Revati",
 	};
-*/
+
+	final static String[] raashiNames = new String[] {
+		"Mesha", "Vrushabha", "Mithuna", "Karkaataka", "Simha", "Kanya", "Thula", "Vrushabha", "Dhanusu", "Makara", "Kumbha", "Meena"
+	};
+
+/*
+static String nakshatras[] = { "Ashwini", "Bharani", "Krithika13", "Rohini", "Mrigashira22", "Aradra", "Punarvasu31", "Pushya", "Ashlesha", "Magha", "Poorva Phalguni Pubha", "Uttara Phalguni13", "Hashta", "Chitta22", "Swathi", "Vishakha31", "Anuradha", "Jyeshta", "Moola", "Purvashaada", "Uttarashaada13", "Shravana", "Dhanishta22", "Shathabisha", "Poorvapaada31", "Uttarapaada", "Revathi" };
+
 	final static String[] nakshatraNames = new String[] {
 		"ಅಶ್ವಿನಿ",
 		"ಭರಣಿ",
-		"ಕೃತ್ತಿಕಾ",
+		"ಕೃತ್ತಿಕಾ13",
 		"ರೋಹಿಣಿ ",
 		"ಮ್ರಿಗಾಶೀರ್ಷ",
 		"ಆರ್ದ್ರ",
-		"ಪುನರ್ವಸು",
+		"ಪುನರ್ವಸು31",
 		"ಪುಷ್ಯ",
 		"ಆಶ್ಲೇಷ",
 		"ಮಾಘ",
 		"ಪೂರ್ವ ಫಲ್ಗುಣಿ",
-		"ಉತ್ತರ ಫಲ್ಗುಣಿ",
+		"ಉತ್ತರ ಫಲ್ಗುಣಿ 13",
 		"ಹಸ್ತ",
 		"ಚಿತ್ರ",
 		"ಸ್ವಾತಿ",
-		"ವಿಶಾಖ",
+		"ವಿಶಾಖ 31",
 		"ಅನುರಾಧ",
 		"ಜ್ಯೇಷ್ಠ",
 		"ಮೂಲ",
 		"ಪೂರ್ವ ಆಷಾಢ",
-		"ಉತ್ತರ ಆಷಾಢ",
+		"ಉತ್ತರ ಆಷಾಢ 13",
 		"ಶ್ರಾವಣ",
-		"ಶ್ರವಿಷ್ಠ",
+		"ಶ್ರವಿಷ್ಠ 22",
 		"ಶತಭಿಷಾ",
-		"ಪೂರ್ವ ಭದ್ರಪಧ",
+		"ಪೂರ್ವ ಭದ್ರಪಧ 31",
 		"ಉತ್ತರ ಭಾದ್ರಪದ",
 		"ರೇವತಿ", 	};
 
-	SwissEph sw = new SwissEph("./ephe");
+	final static String[] raashiNames = new String[] {
+"ಮೇಷ", "ವೃಷಭ", "ಮಿಥುನ", "ಕರ್ಕಾಟಕ", "ಸಿಂಹ","ಕನ್ಯಾ ", "ತುಲಾ", "ವ್ರಿಶ್ಚಿಕಾ", "ದನಸು", "ಮಕರ", "ಕುಂಭ"," ಮೀನಾ"
+	};
+*/
+		SwissEph sw = new SwissEph("./ephe");
 
 	public static void main(String[] p) {
 		NakshatraDates sj = new NakshatraDates();
@@ -81,14 +90,43 @@ public class NakshatraDates {
 		sd.setDate(2025, 12, 1, -TZ_OFFSET_HOURS);
 
 		System.out.println("Some nakshatras for Bangalore (77.5667E 12.9667N) starting with Ashvini in January 1986.");
+
+		System.out.println("┌────────────────┬───────┬─────────────────┬───────────────────────────┐───────────────────────────┐");
+		System.out.printf("│ %-14s │ %-5s │ %-15s | %-25s | %-25s │%n", "Nakshatra", "Paada", "Raashi", "Start", "End");
+		System.out.println("├────────────────┼───────┼─────────────────┤───────────────────────────┤───────────────────────────├");
+		// System.out.println("├────────────────┼───────┼───────┤");
+
 		for(int naksh = 0; naksh < 27; naksh++) {	// Nakshatra number zero based
 			double nakshStart = sj.getNextNakshatraStart(sd.getJulDay(), naksh, true);
 			double nakshEnd = sj.getNextNakshatraEnd(sd.getJulDay(), naksh, true);
-			System.out.println(String.format("topocentric %-20s: %s - %s",
+			int paada = naksh * 4;
+			/* 
+			System.out.printf("%-12s: %s %c; sign: %2d; %s in house %2d\n",
+					 planetName, toDMS(xp[0]), (retrograde ? 'R' : 'D'), sign, toDMS(xp[0] % 30), house);
+		return String.format("%3d°%02d'%07.4f\"", deg, min, sec);
+			System.out.println(String.format("topocentric %-20s Paada# %-3d Raashi - %-10s: %s - %s",
+			*/
+			System.out.printf(String.format("│ %-14s │ %5d │ %15s │ %25s │ %25s │%n",
 					nakshatraNames[naksh],
+					paada,
+					raashiNames[paada/9],
 					sj.toDateString(nakshStart, TZ_OFFSET_HOURS),
 					sj.toDateString(nakshEnd, TZ_OFFSET_HOURS)));
+			/* 
+			String st1 = "bigstring";
+			String st2 = "midstring";
+			String st3 = "bigstring";
+			String st4 = "bigstring";
+			st1 = nakshatraNames[naksh];
+			// st2 = paada;
+			st2 = raashiNames[paada/9];
+			st3 = sj.toDateString(nakshStart, TZ_OFFSET_HOURS);
+			st4 = sj.toDateString(nakshEnd, TZ_OFFSET_HOURS);
 
+			System.out.printf("%-20s: %10s %40s - %30s\n", st1, st2, st3, st4);
+			*/
+
+			/* 
 			// Same with geocentric positions:
 			nakshStart = sj.getNextNakshatraStart(sd.getJulDay(), naksh, false);
 			nakshEnd = sj.getNextNakshatraEnd(sd.getJulDay(), naksh, false);
@@ -96,7 +134,9 @@ public class NakshatraDates {
 					nakshatraNames[naksh],
 					sj.toDateString(nakshStart, TZ_OFFSET_HOURS),
 					sj.toDateString(nakshEnd, TZ_OFFSET_HOURS)));
+			*/
 		}
+		System.out.println("└────────────────┴───────┴─────────────────┘───────────────────────────┘───────────────────────────┘");
 	}
 
 	double getNextNakshatraStart(double juld, int nakshatra, boolean topoctr) {
